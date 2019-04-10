@@ -1,0 +1,43 @@
+<div class="col-lg-9 col-md-8 col-sm-12">
+  <div class="goods clearfix">
+    <div *ngIf="preloader" id="fountainG">
+      <div id="fountainG_1" class="fountainG"></div>
+      <div id="fountainG_2" class="fountainG"></div>
+      <div id="fountainG_3" class="fountainG"></div>
+      <div id="fountainG_4" class="fountainG"></div>
+      <div id="fountainG_5" class="fountainG"></div>
+      <div id="fountainG_6" class="fountainG"></div>
+      <div id="fountainG_7" class="fountainG"></div>
+      <div id="fountainG_8" class="fountainG"></div>
+    </div>
+    <div *ngIf="!goods[0] && !preloader" class="no-goods">Товаров не найдено</div>
+    <a *ngFor="let item of goods" [routerLink]="['/catalog', item.id]" [class.sale]="item.saleprice" [class.not-avail]="!item.avail" class="item animated zoomIn">
+      <div class="img">
+        <img [src]="'assets/img/goods/' + item.cover.src" [style.left]="item.cover.left" [alt]="item.name">
+        <div class="hover">
+          <a (click)="stop($event)" [attr.data-fancybox]="item.id" [href]="'assets/img/goods/' + item.cover.src" class="open fancybox"><i class="fa fa-search"></i></a>
+          <a [attr.data-fancybox]="item.id" class="fancybox hidden" *ngFor="let img of item.img" [href]="'assets/img/goods/' + img.id + img.img"></a>
+
+          <span *ngIf="item.avail" (click)="stop($event);putGoodInCart(item.id,1,item)" class="cart-add">
+            <i *ngIf="!item.added" class="fa fa-cart-arrow-down"></i>
+            <i *ngIf="item.added" class="fa fa-check"></i>
+          </span>
+        </div>
+      </div>
+      <div class="descr">
+        <div class="name">{{item.name}}</div>
+        <div class="price">
+          <span [class.overline]="item.saleprice"><i class="fa fa-ruble"></i> {{item.price}}</span>
+          <span *ngIf="item.saleprice"><i class="fa fa-ruble"></i> {{item.saleprice}}</span>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div *ngIf="!(!goodsElse && page == '1') && !preloader" class="pages">
+    <span *ngIf="page != 1" (click)="getPage(+page-1)">←</span>
+    <span *ngIf="page != 1" (click)="getPage(+page-1)">{{+page - 1}}</span>
+    <span class="active">{{page}}</span>
+    <span *ngIf="goodsElse" (click)="getPage(+page+1)">{{+page + 1}}</span>
+    <span *ngIf="goodsElse" (click)="getPage(+page+1)">→</span>
+  </div>
+</div>

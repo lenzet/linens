@@ -1,0 +1,33 @@
+<div class="goods-content">
+  <h2 class="h2">Товары</h2>
+  <a class="add-good" routerLink="/admin/goods/good"><i class="fa fa-plus"></i> Добавить товар</a>
+  <table class="goods-table">
+    <thead>
+      <tr>
+        <th class="rate">Рейтинг</th>
+        <th class="name">Название</th>
+        <th class="avail">В наличии</th>
+        <th>Категории</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of goods">
+        <td class="rate"><input [(ngModel)]="item.rate" (change)="changeRate(item.id,item.rate)" type="number" step="1" min="0" size="3"></td>
+        <td class="name"><a [routerLink]="'/admin/goods/good/' + item.id">{{item.name}}</a></td>
+        <td class="avail"><input [(ngModel)]="item.avail" (change)="changeAvail(item.id,item.avail)" type="number" step="1" min="0" size="3"></td>
+        <td>
+          <span class="good-cat" *ngFor="let cat of item.cats">{{cat}}</span>
+        </td>
+        <td (click)="removeGood(item.id)" class="red"><span><i class="fa fa-trash"></i></span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="(prevpage > 0) || (page < maxpage)" class="page-nav">
+    <a *ngIf="prevpage > 0" [routerLink]="'/admin/goods/page/' + prevpage"><i class="fa fa-caret-left"></i></a>
+    <a *ngIf="prevpage > 0" [routerLink]="'/admin/goods/page/' + prevpage">{{prevpage}}</a>
+    <a class="active" [routerLink]="'/admin/goods/page/' + page">{{page}}</a>
+    <a *ngIf="page < maxpage" [routerLink]="'/admin/goods/page/' + nextpage">{{nextpage}}</a>
+    <a *ngIf="page < maxpage" [routerLink]="'/admin/goods/page/' + nextpage"><i class="fa fa-caret-right"></i></a>
+  </div>
+</div>

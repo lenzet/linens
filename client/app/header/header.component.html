@@ -1,0 +1,78 @@
+<div class="cssload-container">
+  <div class="cssload-whirlpool"></div>
+</div>
+<header (window:resize)="onResize($event)" class="header">
+  <div class="top-panel">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-9 col-sm-6">
+          <div class="contacts">
+            <a href="#" class="vk"><i class="fa fa-vk"></i></a>
+            <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+            <div class="call">
+              <span class="call-hidden">Позвоните нам: </span><a>8 (996) 921 19-90</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-3 col-sm-6">
+          <div class="right">
+            <div class="search hidden-xs">
+              <form>
+                <input [(ngModel)]="search" name="search" type="text" placeholder="Поиск по товарам..."> <button (click)="catalogSearch()" type="submit"><i class="fa fa-search"></i></button>
+              </form>
+            </div>
+            <div (clickOutside)="showCart = false" class="cart">
+              <span class="cart-show" (click)="getCart();setShowCart()"><i class="fa fa-shopping-cart"></i></span>
+              <a routerLink="/cart" class="cart-show small"><i class="fa fa-shopping-cart"></i></a>
+              <div *ngIf="showCart && windowWidth > 520" class="cart-table">
+                <div class="h-cart">Товары в корзине:</div>
+                <div class="cart-block">
+                  <table>
+                    <tr *ngFor="let item of cart">
+                      <td class="red"><i (click)="removeGoodFromCart(item.id)" class="fa fa-times"></i></td>
+                      <td>
+                        <div class="img">
+                          <img [src]="'assets/img/goods/' + item.imgId + item.img" [style.left]="item.position_pc + '%'" alt="Товар">
+                        </div>
+                      </td>
+                      <td class="name"><a (click)="showCart=false" [routerLink]="'/catalog/' + item.id">{{item.name}}</a></td>
+                      <td><input type="number" min="1" [max]="item.avail" (input)="cartCountChange(item.id,item.count)" [(ngModel)]="item.count" value="1" step="1"></td>
+                      <td *ngIf="item.count<item.wscount || !item.wscount" class="price"><i class="fa fa-ruble"></i> {{item.price * item.count}}</td>
+                      <td *ngIf="item.wscount && item.count>=item.wscount" class="price"><i class="fa fa-ruble"></i> {{item.wsprice * item.count}}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" class="no-border"><a (click)="showCart=false" routerLink="/cart">Перейти в корзину</a></td>
+                      <td>Всего:</td>
+                      <td class="price"><i class="fa fa-ruble"></i> {{totalPrice}}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-panel">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-3">
+          <div class="logo">
+            <a routerLink="/"><img src="assets/img/logo.png" alt="Хранитель снов"></a>
+          </div>
+        </div>
+        <div class="col-xs-9">
+          <div (clickOutside)="showNav = false" class="mmenu">
+            <span (click)="showNav=!showNav" class="show-nav"><i class="fa fa-bars"></i></span>
+            <ul *ngIf="showNav || windowWidth >= 681" class="nav-list clearfix">
+              <li><a (click)="showNav=false" routerLink="/">Главная</a></li>
+              <li><a (click)="showNav=false" routerLink="/catalog">Каталог товаров</a></li>
+              <li><a (click)="showNav=false" routerLink="/reviews">Отзывы</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

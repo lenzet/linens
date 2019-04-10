@@ -1,0 +1,1736 @@
+@mixin font-face($font-family, $file-path, $weight: normal, $style: normal, $asset-pipeline: false )
+  @font-face
+    font-family: $font-family
+    font-weight: $weight
+    font-style: $style
+
+    @if $asset-pipeline == true 
+      src: font-url('#{$file-path}.eot')
+      src: font-url('#{$file-path}.eot?#iefix') format('embedded-opentype'), font-url('#{$file-path}.woff') format('woff'), font-url('#{$file-path}.ttf') format('truetype')
+    @else
+      src: url('#{$file-path}.eot')
+      src: url('#{$file-path}.eot?#iefix') format('embedded-opentype'), url('#{$file-path}.woff') format('woff'), url('#{$file-path}.ttf') format('truetype')
+
++font-face("raleway", "/assets/fonts/RalewayRegular/RalewayRegular")
++font-face("raleway", "/assets/fonts/RalewayBold/RalewayBold", bold)
++font-face("raleway", "/assets/fonts/RalewayExtraBold/RalewayExtraBold", 800)
++font-face("raleway", "/assets/fonts/RalewayLight/RalewayLight", 300)
++font-face("raleway", "/assets/fonts/RalewaySemiBold/RalewaySemiBold", 600)
++font-face("raleway", "/assets/fonts/RalewayThin/RalewayThin", 100)
++font-face("firasans", "/assets/fonts/FiraSansRegular/FiraSansRegular")
++font-face("LobsterRegular", "/assets/fonts/LobsterRegular/LobsterRegular")
+
+
+$default-font: "raleway", sans-serif
+$accent: #06438b
+$blue: #66C7CD
+$pink: #ca8f91
+
+*::-webkit-input-placeholder
+  color: #666
+  opacity: 1
+
+*:-moz-placeholder
+  color: #666
+  opacity: 1
+
+*::-moz-placeholder
+  color: #666
+  opacity: 1
+
+*:-ms-input-placeholder
+  color: #666
+  opacity: 1
+
+*:active, *:hover, *:focus
+  outline: 0
+  outline-offset: 0
+  text-decoration: none
+
+a:active, a:hover, a:focus, a:visited
+  text-decoration: none
+
+body input:focus:required:invalid,
+body textarea:focus:required:invalid
+  color: rgba(0,0,0,.25)
+  border-color: rgba(0,0,0,.25)
+
+html, body
+  height: 100%
+  background: #fff
+
+body
+  font-size: 16px
+  min-width: 320px
+  position: relative
+  line-height: 1.75
+  font-family: $default-font
+  overflow-x: hidden
+  opacity: 1
+ul
+  padding: 0
+  margin: 0
+li
+  list-style-type: none
+
+h1, h2, h3, h4, h5, h6
+  margin: 0
+
+a, a:hover, a:active, a:visited
+  color: inherit
+
+
+.s-catalog-main, .s-reviews, .s-cart
+  min-height: 500px
+
+
+
+.header, section
+  max-width: 1920px
+  margin: 0 auto
+  background: #fff
+
+.header
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  width: 100%
+  z-index: 100
+  height: 144px
+  .top-panel
+    padding: 7px 0
+    background: #2a2a2a
+    color: #fff
+    .contacts
+      & > a
+        border: 1px solid #fff
+        font-size: 17px
+        display: inline-block
+        width: 30px
+        height: 30px
+        text-align: center
+        margin-right: 2px
+        transition-duration: .3s
+        &.vk:hover
+          background: #4a76a8
+        &.instagram:hover
+          background-image: linear-gradient(to top left, #ffac4d, #a331c0)
+      .call
+        display: inline-block
+        padding-left: 10px
+        font-size: 15px
+        a
+          border: none
+          font-family: Arial
+    .right
+      text-align: right
+    .search
+      position: relative
+      top: -2px
+      display: inline-block
+      .fa-search
+        position: relative
+        top: 1px
+      input
+        background: none
+        border: none
+        border-bottom: 1px solid #fff
+        color: #fff
+        font-size: 15px
+        padding: 0
+        &::-webkit-input-placeholder
+          color: #fff
+          opacity: 1
+
+        &:-moz-placeholder
+          color: #fff
+          opacity: 1
+
+        &::-moz-placeholder
+          color: #fff
+          opacity: 1
+
+        &:-ms-input-placeholder
+          color: #fff
+          opacity: 1
+      button
+        background: none
+        border: none
+        font-size: 16px
+        padding: 0
+        margin-right: 7px
+    .cart
+      display: inline-block
+      font-size: 18px
+      position: relative
+      &-show
+        cursor: pointer
+        &.small
+          display: none
+      &-table
+        position: absolute
+        z-index: 50
+        top: 125%
+        right: -5px
+        background: #fff
+        color: #333
+        border: solid #d2d2d2 1px
+        padding: 20px
+        font-size: 15px
+        animation-name: 'fadeInDown'
+        animation-duration: .2s
+        &::before
+          content: ''
+          position: absolute
+          bottom: 100%
+          right: 2px
+          border: 9px solid transparent
+          border-bottom: 9px solid #fff
+          z-index: 10
+          pointer-events: none
+        &::after
+          content: ''
+          position: absolute
+          bottom: 100%
+          right: 0
+          border: 11px solid transparent
+          border-bottom: 11px solid #d2d2d2
+          pointer-events: none
+        .h-cart
+            font-weight: bold
+            font-size: 17px
+            padding-bottom: 10px
+            text-align: left
+        .cart-block
+          max-height: 410px
+          overflow-y: auto
+          table
+            td
+              border: 1px solid #d2d2d2
+              padding: 5px 10px
+              overflow: auto
+              white-space: nowrap
+              &.no-border
+                border: none
+                text-align: left
+                padding-left: 0
+                a
+                  text-decoration: underline
+                  &:hover
+                    text-decoration: none
+              .img
+                width: 75px
+                height: 75px
+                border: solid 1px #d2d2d2
+                overflow: hidden
+                position: relative
+                img
+                  height: 100%
+                  width: auto
+                  position: absolute
+                  left: 0
+              input[type="number"]
+                width: 50px
+                text-align: center
+              &.name
+                text-align: left
+                a:hover
+                  text-decoration: underline
+              &.price
+                font-family: firasans
+                color: #c21717
+                font-size: 16px
+                .fa
+                  font-size: 13px
+              &.red
+                color: #c21717
+                .fa
+                  cursor: pointer
+                  opacity: .8
+                  transition-duration: .3s
+                  &:hover
+                    opacity: 1
+
+
+
+  .nav-panel
+    border-bottom: #adadad solid 1px
+    .logo
+      margin-top: 7px
+      a
+        display: block
+        padding-bottom: 14px
+    .mmenu
+      float: right
+      color: #337ab7
+      .show-nav
+        font-size: 35px
+        margin-top: 19px
+        display: none
+        color: #98c9ec
+        text-align: center
+        cursor: pointer
+      ul
+        margin: 0
+        li
+          float: left
+          padding: 35px 20px
+          font-family: 'LobsterRegular'
+          &:last-child
+            padding-right: 0
+          a
+            transition-duration: .2s
+            &:hover
+              color: $pink
+.s-home
+  .home-slider
+    position: relative
+    background: url(assets/img/top-bg.jpg) center top no-repeat / cover
+    .main
+      height: 100vh
+      min-height: 568px
+      padding-top: 144px
+      color: #fff
+      text-align: center
+      display: flex
+      .block
+        margin: auto
+        .h2
+          text-align: center
+          margin: 0
+          font-size: 62px
+          line-height: 1
+        .com
+          margin: 0
+          font-size: 25px
+          line-height: 1
+        .button
+          color: #fff
+          font-size: 20px
+          border: 2px solid #fff
+          padding: 8px 25px
+          display: inline-block
+          background: transparent
+          margin: 15px 5px 0
+          font-size: 16px
+          &:hover
+            text-decoration: none
+            background: $accent
+            border-color: $accent
+          &.dark
+            background: $accent
+            border-color: $accent
+    .owl-item
+      transition-duration: 1s
+      .h2
+        transform: translateY(200px)
+        opacity: 0
+        transition-duration: 1.5s
+        transition-delay: .8s
+      .com
+        transform: translateY(200px)
+        opacity: 0
+        transition-duration: 1.5s
+        transition-delay: .5s
+      .button
+        transform: translateY(200px)
+        opacity: 0
+        transition-duration: 1.5s
+      &.active
+        .h2
+          transform: translateY(0)
+          opacity: 1
+        .com
+          transform: translateY(0)
+          opacity: 1
+        .button
+          transform: translateY(0)
+          opacity: 1
+    .owl-dots
+      text-align: center
+      position: absolute
+      bottom: 0
+      width: 100%
+      .owl-dot
+        width: 14px
+        height: 14px
+        margin: 0 1.5px
+        border: solid 1px #fff
+        border-radius: 100%
+        display: inline-block
+        transition-duration: .2s
+        &.active, &:hover
+          background: #fff
+
+.s-about-us
+  padding-bottom: 20px
+  .h2
+    font-family: 'LobsterRegular'
+    text-align: center
+    font-size: 35px
+    color: #2e2e2e
+    padding: 20px 0 10px
+  .about-slider
+    .owl-stage-outer
+      padding: 20px 20px 5px 20px
+    .img
+      border: solid 15px #fff
+      box-shadow: 0 0 2px rgba(0,0,0,.3)
+      width: 95%
+      img
+        width: 100%
+        height: auto
+    .owl-dots
+      text-align: center
+      width: 100%
+      .owl-dot
+        width: 12px
+        height: 12px
+        margin: 0 1.5px
+        border-radius: 100%
+        display: inline-block
+        transition-duration: .2s
+        background: $blue
+        &.active, &:hover
+          background: $accent
+  .text
+    padding-top: 10px
+
+.s-catalog
+  padding-bottom: 25px
+  .h2
+    font-family: 'LobsterRegular'
+    text-align: center
+    font-size: 35px
+    color: #2e2e2e
+    padding: 20px 0
+    position: relative
+    &::before
+      content: ''
+      position: absolute
+      width: 37%
+      top: 50%
+      height: 5px
+      border: 1px solid #2e2e2e
+      border-left: none
+      border-right: none
+      right: 0
+    &::after
+      content: ''
+      position: absolute
+      width: 37%
+      top: 50%
+      height: 5px
+      border: 1px solid #2e2e2e
+      border-left: none
+      border-right: none
+      left: 0
+  .catalog-slider
+    padding: 15px 0 20px
+    .item
+      position: relative
+      display: block
+      max-width: 270px
+      margin: 0 auto
+      .img
+        overflow: hidden
+        height: 270px
+        position: relative
+        img
+          width: auto
+          height: 100%
+          position: absolute
+          transition-duration: 1s
+      &::before
+        content: ''
+        position: absolute
+        width: 100%
+        height: 100%
+        background: $accent
+        opacity: 0
+        top: 0
+        left: 0
+        z-index: 3
+        transition-duration: .5s
+      &:hover .img img
+        transform: scale(1.1)
+      &:hover::before
+        opacity: .4
+      .about
+        position: absolute
+        bottom: 20px
+        width: 100%
+        background: #198eab
+        color: #fff
+        text-align: center
+        z-index: 5
+        .name
+          font-size: 18px
+          padding: 5px 0
+        .count
+          font-size: 14px
+          font-family: Arial
+          padding-bottom: 7px
+    .owl-nav
+      text-align: center
+      margin-top: 20px
+      > div
+        display: inline-block
+        font-size: 27px
+        padding: 4px 12px
+        margin: 5px
+        border: 2px solid #198eab
+        color: #198eab
+        line-height: 1
+        transition-duration: .4s
+        &:hover, &.disabled
+          color: $blue
+          border-color: $blue
+
+.s-achievements
+  background: url('/assets/img/main-catalog.jpg') no-repeat center / cover
+  background-attachment: fixed
+  padding: 100px 0
+  .achieve
+    text-align: center
+    color: #fff
+    font-weight: 500
+    font-size: 18px
+    line-height: 1.2
+    float: left
+    width: 25%
+    .fa
+      color: #61d7df
+      font-size: 60px
+      padding-bottom: 10px
+
+.s-added
+  padding-bottom: 20px
+  .h2
+    font-family: 'LobsterRegular'
+    text-align: center
+    font-size: 35px
+    color: #2e2e2e
+    padding: 20px 0
+    position: relative
+  .added-slider
+    .owl-nav
+      text-align: center
+      margin-top: 20px
+      > div
+        display: inline-block
+        font-size: 27px
+        padding: 4px 12px
+        margin: 5px
+        border: 2px solid #198eab
+        color: #198eab
+        line-height: 1
+        transition-duration: .4s
+        &:hover, &.disabled
+          color: $blue
+          border-color: $blue
+    .item
+      border: 1px solid #ededed
+      position: relative
+      display: block
+      max-width: 250px
+      margin: 0 auto
+      &.sale::before
+        content: 'SALE!'
+        position: absolute
+        top: 5px
+        right: 5px
+        width: 65px
+        height: 65px
+        padding: 19px 0
+        font-size: 17px
+        z-index: 1
+        background: #66c7cd
+        color: #fff
+        border-radius: 100%
+        text-align: center
+        font-weight: bold
+      &.not-avail::after
+        content: 'Нет в наличии'
+        position: absolute
+        z-index: 1
+        padding: 7px 10px
+        font-size: 13px
+        background: #c21717
+        color: #fff
+        top: 77px
+        right: 0
+        text-align: center
+        line-height: 1
+      .img
+        position: relative
+        overflow: hidden
+        width: 100%
+        height: 248px
+        img
+          position: absolute
+          transition-duration: 1s
+          height: 100%
+          width: auto
+        &:hover
+          img
+            transform: scale(1.1)
+        .hover
+          position: absolute
+          top: 0
+          left: 0
+          right: 0
+          height: 100%
+          z-index: 3
+          text-align: center
+          &::before
+            content: ''
+            position: absolute
+            top: 0
+            left: 0
+            right: 0
+            height: 100%
+            background: $accent
+            opacity: 0
+            z-index: -1
+          a, span
+            display: inline-block
+            background: #fff
+            color: #61d7df
+            padding: 5px 12px
+            font-size: 19px
+            margin: 42% 1px 0 1px
+            transition-duration: .4s
+            &.hidden
+              display: none
+            &:hover
+              color: #fff
+              background: #61d7df
+            &.open
+              transform: translateX(-50px)
+              opacity: 0
+            &.cart-add
+              transform: translateX(50px)
+              opacity: 0
+          &:hover
+            &::before
+              opacity: .4
+            .open, .cart-add
+              transform: translateX(0)
+              opacity: 1
+      .descr
+        padding: 4px 7px
+        .price
+          text-align: right
+          font-family: 'firasans'
+          font-size: 20px
+          color: #c21717
+          .overline
+            position: relative
+            display: inline-block
+            font-size: 18px
+            opacity: .6
+            margin-right: 5px
+            &::before
+              content: ''
+              position: absolute
+              width: 100%
+              top: 45%
+              height: 2px
+              background: #c21717
+            .fa
+              font-size: 15px
+          .fa
+            font-size: 17px
+
+.s-call-me
+  background: url('/assets/img/callme.jpg') no-repeat right top / cover
+  background-attachment: fixed
+  padding: 100px 0
+  .text
+    color: #fff
+    text-transform: uppercase
+    font-weight: bold
+    font-size: 40px
+    line-height: 1
+    font-family: 'firasans'
+    padding-top: 12px
+    span
+      color: #61d7df
+  .form
+    input
+      width: 70%
+      max-width: 500px
+      padding: 20px
+      height: 60px
+      border: none
+      font-family: 'firasans'
+    .button
+      width: 30%
+      max-width: 200px
+      background: #61d7df
+      border: none
+      color: #fff
+      text-transform: none
+      font-size: 18px
+      padding: 10px 0
+      height: 60px
+      vertical-align: bottom
+      .fa
+        font-size: 23px
+        position: relative
+        top: 3px
+        left: -6px
+
+.footer
+  background: #fff
+  color: #2e2e2e
+  padding: 50px 0 0 0
+  .h3
+    text-transform: uppercase
+    font-size: 18px
+    position: relative
+    padding-bottom: 10px
+  ul
+    padding: 0 0 50px 0
+    li
+      margin: 5px 0
+
+      a
+        color: inherit
+        &:hover
+          text-decoration: underline
+        &.phone
+          font-family: Arial
+  .bot-panel
+    text-align: center
+    padding: 10px 0
+    background-color: #2a2a2a
+    color: #fff
+    span
+      font-family: Arial
+      font-size: 15px
+
+
+
+
+
+
+.s-home
+  .page-header
+    background: url('/assets/img/page-header.jpg') no-repeat center top / cover
+    background-attachment: fixed
+    text-align: center
+    color: #fff
+    padding-top: 144px
+    .h2
+      font-size: 35px
+      padding: 35px 0
+      font-family: 'LobsterRegular'
+
+.s-catalog-main
+  padding: 80px 0
+  border-bottom: solid #d2d2d2  1px
+  position: relative
+  .show-nav
+    position: fixed
+    right: 20px
+    bottom: 5%
+    background: #67c7cd
+    color: #fff
+    width: 55px
+    height: 55px
+    cursor: pointer
+    z-index: 10
+    border-radius: 100%
+    font-size: 27px
+    padding: 4px 0
+    text-align: center
+    opacity: .4
+    transition: opacity .3s ease
+    &:hover
+      opacity: 1
+  .no-goods
+    font-size: 18px
+  .item
+    border: 1px solid #ededed
+    width: 235px
+    margin-right: 5%
+    margin-bottom: 35px
+    float: left
+    position: relative
+    display: block
+
+    &.sale::before
+      content: 'SALE!'
+      position: absolute
+      z-index: 10
+      padding: 15px 0
+      width: 55px
+      height: 55px
+      font-size: 15px
+      background: #66c7cd
+      color: #fff
+      border-radius: 100%
+      top: -15px
+      right: -15px
+      text-align: center
+      font-weight: bold
+    &.not-avail::after
+      content: 'Нет в наличии'
+      position: absolute
+      z-index: 1
+      padding: 7px 10px
+      font-size: 13px
+      background: #c21717
+      color: #fff
+      top: 50px
+      right: 0
+      text-align: center
+      line-height: 1
+    .img
+      position: relative
+      overflow: hidden
+      width: 100%
+      height: 235px
+      position: relative
+      img
+        position: absolute
+        transition-duration: 1s
+        height: 100%
+      &:hover
+        img
+          transform: scale(1.1)
+      .hover
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+        height: 100%
+        z-index: 3
+        text-align: center
+        &::before
+          content: ''
+          position: absolute
+          top: 0
+          left: 0
+          right: 0
+          height: 100%
+          background: $accent
+          opacity: 0
+          z-index: -1
+        a, span
+          display: inline-block
+          background: #fff
+          color: #61d7df
+          padding: 5px 12px
+          font-size: 19px
+          margin: 42% 1px 0 1px
+          transition-duration: .4s
+          &.hidden
+            display: none
+          &:hover
+            color: #fff
+            background: #61d7df
+          &.open
+            transform: translateX(-50px)
+            opacity: 0
+          &.cart-add
+            transform: translateX(50px)
+            opacity: 0
+        &:hover
+          &::before
+            opacity: .4
+          .open, .cart-add
+            transform: translateX(0)
+            opacity: 1
+    .descr
+      padding: 4px 7px
+      .price
+        text-align: right
+        font-family: 'firasans'
+        font-size: 20px
+        color: #c21717
+        .overline
+          position: relative
+          display: inline-block
+          font-size: 18px
+          opacity: .6
+          margin-right: 5px
+          &::before
+            content: ''
+            position: absolute
+            width: 100%
+            top: 45%
+            height: 2px
+            background: #c21717
+          .fa
+            font-size: 15px
+        .fa
+          font-size: 17px
+
+  .good
+    .good-left, .good-right
+      float: left
+      padding: 0 15px
+    .good-left
+      width: 41.66666667%
+    .good-right
+      width: 58.33333333%
+    .left-images
+      animation-delay: .6s
+      .img
+        width: 335px
+        height: 335px
+        overflow: hidden
+        position: relative
+        &.sale::before
+          content: 'SALE!'
+          position: absolute
+          z-index: 10
+          padding: 19px 0
+          width: 75px
+          height: 75px
+          font-size: 21px
+          background: #66c7cd
+          color: #fff
+          border-radius: 100%
+          top: 5px
+          right: 5px
+          text-align: center
+          font-weight: bold
+        img
+          height: 100%
+          width: auto
+          position: absolute
+    .mini-slider
+      margin: 5px 0
+      .mini
+        height: 109px
+        overflow: hidden
+        display: block
+        position: relative
+        img
+          height: 100%
+          width: auto
+          position: absolute
+    .right-info
+      .name
+        font-weight: bold
+        color: #2e2e2e
+        font-size: 21px
+      .price
+        color: #c21717
+        font-family: firasans
+        font-size: 21px
+        padding: 5px 0
+        .overline
+          position: relative
+          display: inline-block
+          font-size: 18px
+          opacity: .6
+          margin-right: 5px
+          &::before
+            content: ''
+            position: absolute
+            width: 100%
+            top: 45%
+            height: 2px
+            background: #c21717
+        .fa
+          font-size: 18px
+      .about
+        font-size: 15px
+        line-height: 1.3
+        padding-right: 50px
+        padding-bottom: 20px
+      .cart
+        input[type="number"]
+          width: 50px
+          font-size: 17px
+          text-align: center
+          font-family: firasans
+        .ws-text
+          font-family: firasans
+          font-size: 14px
+          margin-bottom: 10px
+          .red
+            color: #c21717
+            font-size: 16px
+          .fa
+            font-size: 13px
+        .in-cart
+          display: inline-block
+          margin-top: 10px
+          border: 1px solid $blue
+          padding: 5px 10px
+          font-size: 17px
+          background: $blue
+          color: #fff
+          cursor: pointer
+      .avail
+        font-size: 14px
+      .not-avail
+        color: #c21717
+      .categories
+        padding-top: 10px
+        font-size: 15px
+        a
+          color: $blue
+    .chars
+      padding-top: 40px
+      .h3
+        display: inline-block
+        border: 1px solid #d2d2d2
+        padding: 10px 20px
+        border-top: 4px solid $blue
+        border-bottom: none
+      table
+        width: 70%
+        td
+          border: solid 1px #d2d2d2
+          padding: 10px 20px
+          &.char
+            font-weight: bold
+            width: 35%
+    .h-related
+      display: inline-block
+      margin: 45px 0 25px
+      border-bottom: solid 4px #66c7cd
+      font-weight: bold
+      font-size: 18px
+      padding: 0 12px 5px 0
+    .related-slider
+      .item
+        width: 100%
+        max-width: 270px
+        margin-bottom: 10px
+        display: block
+        &.sale::before
+          top: 5px
+          right: 5px
+          width: 65px
+          height: 65px
+          padding: 19px 0
+          font-size: 17px
+          z-index: 1
+        &.sale::after
+          top: 77px
+        .img
+          height: 269px
+          overflow: hidden
+          position: relative
+          img
+            height: 100%
+            width: auto
+            position: absolute
+      .owl-nav
+        text-align: center
+        > div
+          display: inline-block
+          font-size: 27px
+          padding: 4px 12px
+          margin: 5px
+          border: 1px solid #198eab
+          color: #198eab
+          line-height: 1
+          transition-duration: .4s
+          &:hover, &.disabled
+            color: $blue
+            border-color: $blue
+
+  .pages
+    text-align: center
+    span
+      display: inline-block
+      cursor: pointer
+      color: $blue
+      border: solid #d3ced2 1px
+      width: 34px
+      height: 34px
+      line-height: 32px
+      transition-duration: .2s
+      margin: 0 1px
+      &:hover, &.active
+        background: $blue
+        border-color: $blue
+        color: #fff
+        text-decoration: none
+
+#page
+  .page-nav
+    position: static
+    animation-duration: .2s
+    animation-name: fadeIn
+    &-content
+      animation-duration: .4s
+      animation-name: fadeInRight
+      .popular
+        padding-bottom: 10px
+        .h3
+          padding-bottom: 35px
+          line-height: 1
+        .popular-good
+          position: relative
+          display: block
+          height: 70px
+          margin-bottom: 25px
+          padding-bottom: 90px
+          border-bottom: 1px dashed #d2d2d2
+          &:last-child
+            border-bottom: none
+          &:hover .img
+            opacity: .7
+          .img
+            width: 70px
+            height: 70px
+            overflow: hidden
+            position: absolute
+            top: 0
+            left: 0
+            transition: opacity .4s ease
+            img
+              position: absolute
+              height: 100%
+              width: auto
+          .info
+            padding-left: 80px
+            .name
+              font-size: 14px
+              line-height: 1
+              padding-bottom: 10px
+            .price
+              line-height: 1
+              font-family: 'firasans'
+              color: #c21717
+              font-size: 16px
+              .fa
+                font-size: 14px
+              .overline
+                position: relative
+                display: inline-block
+                font-size: 15px
+                opacity: .6
+                margin-right: 5px
+                &::before
+                  content: ''
+                  position: absolute
+                  width: 100%
+                  top: 45%
+                  height: 1px
+                  background: #c21717
+                .fa
+                  font-size: 13px
+      .categories
+        .h3
+          padding-bottom: 10px
+        a:hover
+          text-decoration: underline
+      .filters
+        .search
+          color: #2e2e2e
+          padding-top: 30px
+          .text
+            font-weight: bold
+            font-size: 17px
+            padding-bottom: 10px
+          input
+            font-size: 15px
+            padding: 2px 5px
+            height: 34px
+          button
+            background: $blue
+            color: #fff
+            border: solid 1px $blue
+            height: 34px
+            padding: 0 8px
+            vertical-align: bottom
+        .price
+          padding-top: 30px
+          color: #2e2e2e
+          .text
+            font-weight: bold
+            font-size: 17px
+            padding-bottom: 10px
+          input
+            font-size: 15px
+            padding: 2px 5px
+            height: 34px
+            width: 104px
+          button
+            background: $blue
+            color: #fff
+            border: solid 1px $blue
+            margin-top: 10px
+            height: 34px
+            width: 104px
+        .filter
+          padding-top: 30px
+          color: #2e2e2e
+          .text
+            font-weight: bold
+            font-size: 17px
+            padding-bottom: 10px
+          button
+            background: $blue
+            color: #fff
+            border: solid 1px $blue
+            margin-top: 10px
+            height: 34px
+            width: 104px
+
+
+.s-cart
+  padding: 80px 0
+  border-bottom: solid #adadad 1px
+  .no-goods
+    font-size: 18px
+  .show-nav
+    display: none
+  .cart-table
+    overflow-x: auto
+    table
+      width: 95%
+      min-width: 430px
+      text-align: center
+      th, td
+        border: 1px solid #ccc
+        padding: 10px
+        font-weight: normal
+      td
+        color: #2e2e2e
+        &.red
+          color: #c21717
+        &.remove
+          color: #c21717
+          .fa
+            opacity: .8
+            transition-duration: .3s
+            cursor: pointer
+            &:hover
+              opacity: 1
+        &.img
+          max-width: 120px
+          a
+            display: block
+            padding: 6px
+            border: 1px solid #d6d4d4
+            width: 65%
+            margin: 0 auto
+          img
+            width: 100%
+        &.quantity input
+          font-family: Arial
+          text-align: center
+          max-width: 60px
+          font-size: 15px
+        &.price, &.total
+          font-family: Arial
+        &.cart-total
+          font-family: Arial
+  .form
+    padding-top: 40px
+    .h3
+      display: inline-block
+      border: 1px solid #d2d2d2
+      padding: 10px 20px
+      border-top: 4px solid $blue
+      border-bottom: none
+      font-weight: normal
+    table
+      width: 70%
+      td
+        border: solid 1px #d2d2d2
+        padding: 10px 20px
+        input
+          border: none
+          width: 100%
+          color: #666
+        select
+          height: 30px
+          border: solid 1px #d2d2d2
+          color: #666
+          font-size: 16px
+    button
+      background: #66C7CD
+      border: none
+      color: #fff
+      padding: 7px 20px
+      font-size: 19px
+      margin-top: 20px
+
+
+
+.s-reviews
+  padding: 80px 0
+  border-bottom: solid #d2d2d2  1px
+  .show-nav
+    display: none
+  .categories
+    .h3
+      padding-bottom: 10px
+  .review
+    margin-bottom: 50px
+    margin-right: 35px
+    position: relative
+    padding-left: 235px
+    animation-name: 'fadeInLeft'
+    animation-duration: .7s
+    &:nth-child(2n)
+      padding-left: 0
+      padding-right: 235px
+      animation-name: 'fadeInRight'
+      .img
+        right: 0
+        left: auto
+    .img
+      width: 200px
+      height: 200px
+      overflow: hidden
+      border-radius: 100%
+      position: absolute
+      left: 0
+      top: 50%
+      margin-top: -100px
+      img
+        height: 100%
+        width: auto
+        position: absolute
+    .content
+      width: 100%
+      padding: 20px
+      border: solid 1px #d2d2d2
+      border-radius: 20px
+      position: relative
+      .name
+        font-size: 18px
+      .vk
+        font-family: 'firasans'
+        font-size: 15px
+        .fa
+          font-size: 20px
+          color: #4a76a8
+      .text
+        font-size: 15px
+        padding: 13px 0
+  .show-more
+    text-align: center
+    button
+      background: #66C7CD
+      border: none
+      color: #fff
+      padding: 7px 20px
+      font-size: 19px
+      margin-top: 20px
+
+
+
+
+.animated 
+  visibility: visible !important
+
+.hide-on-init 
+  visibility: hidden
+
+
+
+.no-preloader
+  .cssload-container
+    display: none
+
+.cssload-container
+  position: fixed
+  left: 0
+  right: 0
+  top: 0
+  bottom: 0
+  width: 100%
+  height: 100%
+  background: #fff
+  z-index: 1000
+  
+.cssload-whirlpool,
+.cssload-whirlpool::before,
+.cssload-whirlpool::after 
+  position: absolute
+  top: 50%
+  left: 50%
+  border: 2px solid rgb(202,143,145)
+  border-left-color: rgb(51,122,183)
+  border-radius: 1873px
+
+
+.cssload-whirlpool
+  margin: -47px 0 0 -47px
+  height: 94px
+  width: 94px
+  animation: cssload-rotate 750ms linear infinite
+
+.cssload-whirlpool::before 
+  content: ""
+  margin: -43px 0 0 -43px
+  height: 83px
+  width: 83px
+  animation: cssload-rotate 750ms linear infinite
+
+.cssload-whirlpool::after
+  content: ""
+  margin: -54px 0 0 -54px
+  height: 105px
+  width: 105px
+  animation: cssload-rotate 1500ms linear infinite
+
+
+
+#fountainG
+  position: relative
+  width: 180px
+  height: 22px
+  margin: auto
+
+.fountainG
+  position: absolute
+  top: 0
+  background-color: rgb(202,143,145)
+  width: 22px
+  height: 22px
+  animation-name: bounce_fountainG
+  animation-duration: 0.775s
+  animation-iteration-count: infinite
+  animation-direction: normal
+  transform: scale(.3)
+  border-radius: 14px
+
+#fountainG_1
+  left: 0
+  animation-delay: 0.316s
+
+#fountainG_2
+  left: 22px
+  animation-delay: 0.3925s
+
+#fountainG_3
+  left: 45px
+  animation-delay: 0.469s
+
+#fountainG_4
+  left: 67px
+  animation-delay: 0.5455s
+
+#fountainG_5
+  left: 90px
+  animation-delay: 0.622s
+
+#fountainG_6
+  left: 112px
+  animation-delay: 0.6985s
+
+#fountainG_7
+  left: 135px
+  animation-delay: 0.775s
+
+#fountainG_8
+  left: 157px
+  animation-delay: 0.8615s
+
+
+#popup
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  width: 100%
+  height: 100%
+  background: rgba(0, 0, 0, .7)
+  color: #fff
+  display: flex
+  z-index: 1000
+  animation-name: fadeInUp
+  animation-duration: .4s
+  .cart
+    width: 90%
+    max-width: 700px
+    height: 420px
+    margin: auto
+    background: url(assets/img/popup.jpg) center no-repeat
+    position: relative
+    display: flex
+    .content
+      margin: auto 0
+      padding-left: 30px
+      .h3
+        font-size: 31px
+        line-height: 1
+      .text
+        font-size: 20px
+        padding-top: 5px
+        line-height: 1
+      .fa
+        position: absolute
+        top: 0
+        right: 0
+        padding: 10px
+        font-size: 18px
+        cursor: pointer
+        transition: color .3s ease
+        &:hover
+          color: #ca8f91
+
+
+
+
+
+@media only screen and (max-width : 1199px)
+  .s-call-me .text
+    padding-bottom: 15px
+  .s-about-us .text
+    font-size: 14px
+
+  .s-catalog-main .goods .item
+    margin: 0 30px 30px
+
+  .s-catalog-main .good .left-images .img
+    width: 239px
+    height: 239px
+  .s-catalog-main .good .mini-slider .mini
+    height: 76px
+  .s-catalog-main .good .left-images .img.sale::before
+    padding: 15px 0
+    width: 55px
+    height: 55px
+    font-size: 15px
+
+  .s-catalog-main .good .chars table
+    width: 90%
+
+@media only screen and (max-width : 992px)
+  .s-achievements
+    padding: 80px 0
+    .achieve
+      font-size: 15px
+      .fa
+        font-size: 52px
+
+  .s-about-us .about-slider .img
+    width: 65%
+    margin: 0 auto
+
+  .s-about-us .about-slider .owl-stage-outer
+        padding: 20px 0px 5px 0px
+
+  .s-catalog .h2::before,
+  .s-catalog .h2::after
+    width: 30%
+
+@media only screen and (max-width : 991px)
+  .s-catalog-main .good .left-images .img
+    width: 283px
+    height: 283px
+  .s-catalog-main .good .mini-slider .mini
+    height: 90px
+
+  .s-catalog-main
+    padding: 45px 0
+    .goods .item
+      width: 210px
+      margin: 0 2% 25px
+      .img
+        height: 208px
+  
+  .s-reviews, .s-cart
+    padding: 45px 0
+
+  #page .page-nav
+    position: fixed
+    background: rgba(#000, .5)
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    z-index: 2000
+    overflow-y: auto
+    .col-xs-12, .col-sm-12
+      padding: 0
+    &-content
+      background: #fff
+      width: 280px
+      padding: 25px
+      position: absolute
+      right: 0
+      top: 0
+      min-height: 100vh
+
+  #page .page-nav-content .filters .search input
+    max-width: 170px  
+
+@media only screen and (max-width : 767px)
+  .header .top-panel .contacts .call .call-hidden
+    display: none
+  .s-achievements .achieve
+    width: 50%
+    margin-bottom: 60px
+  
+  .s-catalog-main .goods
+    width: 600px
+    margin: 0 auto
+    .item
+      width: 270px
+      margin: 0 2% 25px
+      .img
+        height: 270px
+
+  .s-catalog-main .good .left-images .img
+    width: 235px
+    height: 235px
+
+@media only screen and (max-width : 680px)
+  .s-call-me .form input
+    width: 100%
+    max-width: none
+
+  .s-call-me .form .button
+    width: 100%
+    max-width: none
+    margin-top: 15px
+
+  .header .nav-panel .mmenu .nav-list
+    background: #fff
+    position: absolute
+    right: 0
+    top: 100%
+    animation-name: fadeInRight
+    animation-duration: .2s
+    li
+      float: none
+      padding: 13px 20px
+      display: block
+
+  .header .nav-panel .show-nav
+    display: inline-block !important
+
+  .s-catalog .h2::before,
+  .s-catalog .h2::after
+    width: 18%
+
+  #page .page-nav-content .popular
+    display: none
+
+  .animated
+    animation-duration: 0s !important
+  .s-reviews .review
+    animation-duration: 0s !important
+
+@media only screen and (max-width : 635px)
+  .s-catalog-main .goods
+    width: 500px
+    margin: 0 auto
+    .item
+      width: 230px
+      margin: 0 2% 25px
+      .img
+        height: 228px
+
+@media only screen and (max-width : 620px)
+  .s-catalog-main .good .left-images .img
+    width: 200px
+    height: 200px
+  .s-catalog-main .good .right-info .about
+    font-size: 14px
+
+  .s-reviews .review
+    padding-right: 0 !important
+    padding-left: 0 !important
+    margin-bottom: 20px
+    margin-right: 0
+    .img
+      display: none
+
+@media only screen and (max-width : 600px)
+  .s-home .home-slider .main .block
+    .h2
+      font-size: 55px
+    .com
+      font-size: 23px
+
+  .s-about-us .about-slider .img
+    width: 90%
+
+  .s-cart .form .h3
+    display: none
+
+@media only screen and (max-width : 530px)
+  .s-catalog-main .goods
+    width: 100%
+    .item
+      width: 270px
+      float: none
+      margin: 0 auto 25px
+      .img
+        height: 270px
+
+@media only screen and (max-width : 520px)
+  .header .top-panel .cart-show
+    display: none
+    &.small
+      display: inline-block
+
+  .s-catalog-main .good
+    width: 270px
+    margin: 0 auto
+    .good-left, .good-right,
+      width: 100%
+      float: none
+    .left-images .img
+      width: 270px
+      height: 270px
+      margin-bottom: 25px
+    .chars .h3
+      display: none
+
+  .s-cart .form table
+    width: 100%
+    .td-left
+      display: none
+
+@media only screen and (max-width : 420px)
+  .s-home .home-slider .main .block .button
+    margin: 10px auto
+    display: block
+    padding: 4px 25px
+    max-width: 200px
+
+@media only screen and (max-width : 400px)
+  .s-achievements
+    padding: 40px 0
+    .achieve
+      width: 100%
+      margin-bottom: 60px
+      &:last-child
+        margin-bottom: 0
+
+@media only screen and (max-width : 380px)
+  .s-home .home-slider .main .block
+    .h2
+      font-size: 48px
+    .com
+      font-size: 20px
+  
+  .s-catalog .h2
+    font-size: 30px
+  .s-added .h2
+    font-size: 30px
+
+
+@keyframes bounce_fountainG
+  0%
+    transform: scale(1)
+    background-color: rgb(51,122,183)
+  100%
+    transform: scale(.3)
+    background-color: rgb(255,255,255)
+
+@keyframes cssload-rotate 
+  100% 
+    transform: rotate(360deg)

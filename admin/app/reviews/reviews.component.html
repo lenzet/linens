@@ -1,0 +1,57 @@
+<div class="reviews-content">
+  <h2 class="h2">Отзывы</h2>
+  <div class="reviews">
+    <div *ngFor="let item of reviews" class="review">
+      <div class="img">
+        <label (click)="labelClick($event)">
+          <img [src]="pathToAssets + '/assets/img/reviews/' + item.id + item.img" [style.left]="item.position_px + 'px'" (mousedown)="imgMouseDown($event,item)" alt="Отзыв">
+          <input id="upload" required name="image" type="file" accept="image/jpeg,image/png" (change)="onFileSelected($event,item)" ngModel>
+        </label>
+      </div>
+      <div class="review-content">
+        <div *ngIf="!item.editName" class="name">{{item.name}} <i (click)="item.editName=!item.editName" class="fa fa-pencil"></i></div>
+        <form *ngIf="item.editName">
+          <input class="name" name="name" type="text" [(ngModel)]="item.name">
+          <button (click)="item.editName=!item.editName;editName(item.id,item.name)"><i class="fa fa-check"></i></button>
+        </form>
+
+
+        <div *ngIf="!item.editLink" class="link">
+          <a [href]="item.link" target="_blank"><i class="fa fa-vk"></i> {{item.link}}</a> <i (click)="item.editLink=!item.editLink" class="fa fa-pencil"></i>
+        </div>
+        <form *ngIf="item.editLink">
+          <input class="link" name="link" type="text" [(ngModel)]="item.link">
+          <button (click)="item.editLink=!item.editLink;editLink(item.id,item.link)"><i class="fa fa-check"></i></button>
+        </form>
+
+
+        <div *ngIf="!item.editText" class="text">{{item.text}} <i (click)="item.editText=!item.editText" class="fa fa-pencil"></i></div>
+        <form *ngIf="item.editText">
+          <textarea name="text" class="text" placeholder="Отзыв..." [(ngModel)]="item.text"></textarea>
+          <button (click)="item.editText=!item.editText;editText(item.id,item.text)"><i class="fa fa-check"></i> Применить</button>
+        </form>
+        <span (click)="removeReview(item.id,item.img)" class="remove"><i class="fa fa-trash"></i> Удалить отзыв</span>
+      </div>
+    </div>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" ngNativeValidate>
+      <div class="add-review">
+        <div class="img">
+          <label (click)="labelClick($event)">
+            <img *ngIf="filePath" [src]="pathToAssets + '/assets/img/reviews/pre/' + image" [style.left]="imageLeftPx + 'px'" (mousedown)="imgMouseDown($event)" alt="Отзыв">
+            <div *ngIf="!filePath" class="text">
+              <i class="fa fa-upload"></i><br>
+              Выберите изображение
+            </div>
+            <input id="upload" required name="image" type="file" accept="image/jpeg,image/png" (change)="onFileSelected($event)" ngModel>
+          </label>
+        </div>
+        <div class="review-content">
+          <input name="name" class="name" type="text" placeholder="Имя" ngModel required><br>
+          <input name="link" class="link" type="text" placeholder="Ссылка" ngModel required><br>
+          <textarea name="text" class="text" placeholder="Отзыв..." ngModel required></textarea><br>
+          <button>Добавить отзыв</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

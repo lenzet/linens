@@ -1,0 +1,107 @@
+<div class="col-lg-9 col-md-8">
+  <div *ngIf="!good.name" id="fountainG">
+    <div id="fountainG_1" class="fountainG"></div>
+    <div id="fountainG_2" class="fountainG"></div>
+    <div id="fountainG_3" class="fountainG"></div>
+    <div id="fountainG_4" class="fountainG"></div>
+    <div id="fountainG_5" class="fountainG"></div>
+    <div id="fountainG_6" class="fountainG"></div>
+    <div id="fountainG_7" class="fountainG"></div>
+    <div id="fountainG_8" class="fountainG"></div>
+  </div>
+  <div *ngIf="good.name" class="good">
+    <div class="row">
+      <div class="good-left">
+        <div class="left-images animated fadeInLeft">
+          <div class="img" [class.sale]="good.saleprice">
+            <a class="fancybox" [attr.data-fancybox]="'good' + good.id" [href]="'assets/img/goods/' + good.cover.id + good.cover.img">
+              <img [style.left]="good.cover.position_pc + '%'" [src]="'assets/img/goods/' + good.cover.id + good.cover.img" alt="Товар">
+            </a>
+          </div>
+          <div class="mini-slider owl-carousel hidden-xs">
+            <a *ngFor="let item of good.images" [attr.data-fancybox]="'good' + good.id" [href]="'assets/img/goods/' + item.id + item.img" class="mini fancybox">
+              <img [src]="'assets/img/goods/' + item.id + item.img" [style.left]="item.position_pc + '%'" alt="Товар">
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="good-right">
+        <div class="right-info animated fadeInUp">
+          <div class="name">{{good.name}}</div>
+          <div class="price">
+            <span *ngIf="good.saleprice">
+              <span [class.overline]="good.saleprice"><i class="fa fa-ruble"></i> {{good.price}}</span>
+              <span><i class="fa fa-ruble"></i> {{good.saleprice}}</span>
+            </span>
+            <span *ngIf="!good.saleprice"><i class="fa fa-ruble"></i> {{good.price}}</span>
+          </div>
+          <div class="about">{{good.descr}}</div>
+          <div *ngIf="good.avail" class="cart">
+            <input [(ngModel)]="good.count" type="number" min="1" [max]="good.avail" step="1" value="1"><br>
+            <div *ngIf="good.wscount && good.wsprice" class="ws-text">
+              *при покупке от {{good.wscount}} товаров цена <span class="red"><i class="fa fa-ruble"></i> {{good.salewsprice?good.salewsprice:good.wsprice}}</span>
+            </div>
+            <div *ngIf="!good.wscount" class="ws-text">
+              *покупка оптом недоступна для данного товара
+            </div>
+            <span (click)="putGoodInCart(good.id,good.count,good)" class="in-cart">В корзину <i *ngIf="!good.added" class="fa fa-cart-arrow-down"></i><i *ngIf="good.added" class="fa fa-check"></i></span>
+          </div>
+          <div *ngIf="good.avail" class="avail">Всего в наличии: {{good.avail}}</div>
+          <div *ngIf="!good.avail" class="not-avail">Нет в наличии</div>
+          <div class="categories">
+            Категории: <a *ngFor="let item of good.categories" routerLink="/catalog" [queryParams]="{category:item.id}">{{item.name}}<span *ngIf="!item.last">, </span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="chars">
+          <div class="h3">Характеристики</div>
+          <div class="table">
+            <table>
+              <tr *ngFor="let item of good.chars">
+                <td *ngIf="item.values[0]" class="char">{{item.name}}:</td>
+                <td *ngIf="item.values[0]" class="value">
+                  <span *ngFor="let value of item.values">{{value.name}}<span *ngIf="!value.last">, </span></span>
+                </td>
+              </tr>
+              <tr *ngFor="let item of good.specChars">
+                <td class="char">{{item.name}}:</td>
+                <td class="value">{{item.value}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div *ngIf="good.related" class="h-related">Похожие товары</div>
+        <div *ngIf="good.related" class="related-slider owl-carousel">
+           <a *ngFor="let item of good.related" [routerLink]="['/catalog', item.id]" [class.sale]="item.saleprice" [class.not-avail]="!item.avail" class="item">
+            <div class="img">
+              <img [src]="'assets/img/goods/' + item.cover.id + item.cover.img" [style.left]="item.cover.position_pc + '%'" [alt]="item.name">
+              <div class="hover">
+                <a (click)="stop($event)" [attr.data-fancybox]="item.id" [href]="'assets/img/goods/' + item.cover.id + item.cover.img" class="open fancybox"><i class="fa fa-search"></i></a>
+                <a [attr.data-fancybox]="item.id" class="fancybox hidden" *ngFor="let img of item.images" [href]="'assets/img/goods/' + img.id + img.img"></a>
+
+                <span *ngIf="item.avail" (click)="stop($event);putGoodInCart(item.id,1,item)" class="cart-add">
+                  <i *ngIf="!item.added" class="fa fa-cart-arrow-down"></i>
+                  <i *ngIf="item.added" class="fa fa-check"></i>
+                </span>
+              </div>
+            </div>
+            <div class="descr">
+              <div class="name">{{item.name}}</div>
+              <div class="price">
+                <span [class.overline]="item.saleprice"><i class="fa fa-ruble"></i> {{item.price}}</span>
+                <span *ngIf="item.saleprice"><i class="fa fa-ruble"></i> {{item.saleprice}}</span>
+              </div>
+            </div>
+          </a>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>

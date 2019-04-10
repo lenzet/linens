@@ -1,0 +1,42 @@
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-4 col-sm-4 hidden-xs">
+        <div class="main-nav">
+          <h3 class="h3">Навигация</h3>
+          <ul>
+            <li><a routerLink="">Главная</a></li>
+            <li><a routerLink="/catalog">Каталог товаров</a></li>
+            <li><a routerLink="/reviews">Отзывы</a></li>
+            <li><a routerLink="/cart">Корзина</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-4 hidden-xs">
+        <div class="main-nav">
+          <h3 class="h3">Каталог</h3>
+          <ul>
+            <li><a routerLink="/catalog">Все товары</a></li>
+            <li><a routerLink="/catalog" [queryParams]="{sale:true}">Скидки</a></li>
+            <li><a routerLink="/catalog" [queryParams]="{wholesale:true}">Покупка оптом</a></li>
+            <li *ngFor="let item of categories"><a routerLink="/catalog" [queryParams]="{category:item.id}">{{item.name}}</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+        <div class="main-nav">
+          <h3 class="h3">Свяжитесь с нами</h3>
+          <ul>
+            <li><i class="fa fa-phone"></i> <a class="phone" href="#"> +7 (999) 999 99-99</a></li>
+            <li><i class="fa fa-envelope-o"></i> <a href="#"> ourmail@mail.ru</a></li>
+            <li><i class="fa fa-vk"></i> <a class="soc" href="#"> vk.com/ourshopgroup</a></li>
+            <li><i class="fa fa-instagram"></i> <a class="soc" href="#"> instagram.com/ourshop</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bot-panel">
+    Все права защищены &copy; <span>2019</span>
+  </div>
+</footer>

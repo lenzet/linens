@@ -1,0 +1,24 @@
+<div class="col-lg-9 col-md-8 col-sm-12">
+  <div *ngIf="preloader" id="fountainG">
+    <div id="fountainG_1" class="fountainG"></div>
+    <div id="fountainG_2" class="fountainG"></div>
+    <div id="fountainG_3" class="fountainG"></div>
+    <div id="fountainG_4" class="fountainG"></div>
+    <div id="fountainG_5" class="fountainG"></div>
+    <div id="fountainG_6" class="fountainG"></div>
+    <div id="fountainG_7" class="fountainG"></div>
+    <div id="fountainG_8" class="fountainG"></div>
+  </div>
+  <div *ngIf="!reviews[0] && !preloader" class="no-goods">Отзывов не найдено</div>
+  <div *ngFor="let item of reviews" class="review">
+    <div class="img"><img [src]="'assets/img/reviews/' + item.id + item.img" [style.left]="item.position_pc + '%'" alt="Отзыв"></div>
+    <div class="content">
+      <div class="name">{{item.name}}</div>
+      <a class="vk" [href]="item.link" target="_blank"><i class="fa fa-vk"></i> {{item.link}}</a>
+      <div class="text">{{item.text}}</div>
+    </div>
+  </div>
+  <div *ngIf="reviewsElse" class="show-more">
+    <button (click)="getReviews()" class="more">Показать еще</button>
+  </div>
+</div>

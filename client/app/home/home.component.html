@@ -1,0 +1,156 @@
+<section class="s-home">
+  <div class="home-slider owl-carousel">
+    <div class="main" style="background-image: url(assets/img/top-bg.jpg)">
+      <div class="block">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <h2 class="h2">Постельное белье</h2>
+              <div class="com">с доставкой по всей России</div>
+              <a class="button dark" routerLink="/catalog">Открыть каталог</a>
+              <a class="button" routerLink="/catalog" [queryParams]="{wholesale:true}">Оптовые товары</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="main" style="background-image: url(assets/img/top-bg2.jpg)">
+      <div class="block">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <h2 class="h2">Покупка оптом</h2>
+              <div class="com">по низким ценам</div>
+              <a class="button dark" routerLink="/catalog">Открыть каталог</a>
+              <a class="button" routerLink="/catalog" [queryParams]="{wholesale:true}">Оптовые товары</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="s-about-us">
+  <h2 class="h2">О нас</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="about-slider owl-carousel">
+          <div class="img">
+            <img src="assets/img/about-us.jpg" alt="О нас">
+          </div>
+          <div class="img">
+            <img src="assets/img/about-us2.jpg" alt="О нас">
+          </div>
+          <div class="img">
+            <img src="assets/img/about-us3.jpg" alt="О нас">
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <div class="text">Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты. Предупреждал послушавшись реторический деревни свой диких текстами речью заглавных даль скатился всеми инициал, семь, путь рекламных переписывается вершину однажды. Несколько залетают агенство власти напоивший великий раз страна, вскоре пустился сбить однажды курсивных рукописи, ipsum что даже щеке ручеек, своего он. Диких, образ, жизни всеми, предупреждал свой агенство грамматики силуэт, о lorem точках маленькая имени даль необходимыми! По всей рукописи взгляд подзаголовок сих рекламных. Вопрос взгляд не встретил, однажды, реторический назад дороге агенство продолжил инициал гор но, вопроса путь что оксмокс несколько своего переписали одна жизни сих мир которое. Повстречался, заголовок, решила.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="s-catalog">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 class="h2">Наши товары</h2>
+        <div class="catalog-slider owl-carousel">
+          <a *ngFor="let item of categories" routerLink="/catalog" [queryParams]="{category:item.id}" class="item">
+            <div class="img">
+              <img [src]="'assets/img/categories/' + item.id + item.img" [style.left]="item.position_pc + '%'" alt="НГ">
+            </div>
+            <div class="about">
+              <h3 class="name">{{item.name}}</h3>
+              <div class="count">{{item.count}} товаров</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="s-achievements">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="achieve">
+          <i class="fa fa-truck"></i><br>
+          Быстрая доставка<br>по всей России
+        </div>
+        <div  style="animation-delay: .3s" class="achieve">
+          <i class="fa fa-check-circle-o"></i><br>
+          Продукция<br>высокого качества
+        </div>
+        <div style="animation-delay: .5s" class="achieve">
+          <i class="fa fa-handshake-o"></i><br>
+          Более двухсот<br>довольных клиентов
+        </div>
+        <div style="animation-delay: .7s" class="achieve">
+          <i class="fa fa-percent"></i><br>
+          Скидки<br>при закупке оптом
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="s-added">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 class="h2">Недавно добавленные</h2>
+        <div class="added-slider owl-carousel">
+          <a *ngFor="let item of goods" [routerLink]="['/catalog', item.id]" [class.sale]="item.saleprice" [class.not-avail]="!item.avail" class="item">
+            <div class="img">
+              <img [src]="'assets/img/goods/' + item.cover.src" [style.left]="item.cover.left" [alt]="item.name">
+              <div class="hover">
+                <a (click)="stop($event)" [attr.data-fancybox]="item.id" [href]="'assets/img/goods/' + item.cover.src" class="open fancybox"><i class="fa fa-search"></i></a>
+                <a [attr.data-fancybox]="item.id" class="fancybox hidden" *ngFor="let img of item.img" [href]="'assets/img/goods/' + img.id + img.img"></a>
+
+                <span *ngIf="item.avail" (click)="stop($event);putGoodInCart(item.id,1,item)" class="cart-add">
+                  <i *ngIf="!item.added" class="fa fa-cart-arrow-down"></i>
+                  <i *ngIf="item.added" class="fa fa-check"></i>
+                </span>
+              </div>
+            </div>
+            <div class="descr">
+              <div class="name">{{item.name}}</div>
+              <div class="price">
+                <span [class.overline]="item.saleprice"><i class="fa fa-ruble"></i> {{item.price}}</span>
+                <span *ngIf="item.saleprice"><i class="fa fa-ruble"></i> {{item.saleprice}}</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="s-call-me">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5 col-xs-12">
+        <div class="text">
+          Остались <span>вопросы?</span>
+        </div>
+      </div>
+      <div class="col-lg-7 col-xs-12">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)" ngNativeValidate class="form">
+          <input type="text" name="phone" placeholder="Введите Ваш номер телефона и мы свяжемся с Вами" required ngModel><button class="button" type="submit"><i class="fa fa-phone"></i> Позвоните мне</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<div *ngIf="popup" (click)="popup=false" id="popup">
+  <div class="cart">
+    <div class="content">
+      <h3 class="h3">Спасибо за заявку!</h3>
+      <div class="text">Мы свяжемся с Вами в течение рабочего дня.</div>
+      <i (click)="popup=false" class="fa fa-times"></i>
+    </div>
+  </div>
+</div>

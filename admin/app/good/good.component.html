@@ -1,0 +1,119 @@
+<div class="good-content">
+  <h2 *ngIf="!good.id" class="h2">Добавление товара</h2>
+  <h2 *ngIf="good.id" class="h2">Редактирование товара</h2>
+  <div class="form">
+    <input class="good-name" type="text" [(ngModel)]="good.name" placeholder="Название товара"><br>
+    <span (clickOutside)="catListShow = false" (click)="catListShow = !catListShow" class="select-cat">
+      <span *ngIf="!good.selectedCats[0]">Выбрать категорию </span> <span class="selected-cat" *ngFor="let cat of good.selectedCats">{{cat.name}} <i (click)="removeSelectedCat($event,cat.id)" class="fa fa-times"></i></span> <i [className]="catListShow ? 'fa fa-caret-up' : 'fa fa-caret-down'"></i>
+      <span *ngIf="catListShow" class="cat-list">
+        <ul>
+          <li (click)="selectCat($event,cat.id,cat.name,cat)" *ngFor="let cat of categories">
+            <i *ngIf="cat.selected" class="fa fa-check"></i> {{cat.name}}
+          </li>
+        </ul>
+      </span>
+    </span>
+    <div class="price-block">
+      <div class="main-price">
+        <span class="price">Цена: <input type="text" [(ngModel)]="good.price"> <i class="fa fa-rub"></i></span>
+        <span class="wscheck"><label><input [(ngModel)]="good.wscheck" type="checkbox"> Покупка оптом</label></span>
+        <span class="salecheck"><label><input [(ngModel)]="good.salecheck" type="checkbox"> Скидка</label></span>
+      </div>
+      
+      <div *ngIf="good.wscheck" class="price-ws">
+        <span class="wscount">От <input [(ngModel)]="good.wscount" type="number" step="1" min="2" size="3"></span>
+        <span class="wsprice">товаров цена <input [(ngModel)]="good.wsprice" type="text"> <i class="fa fa-rub"></i></span>
+      </div>
+
+      <div *ngIf="good.salecheck" class="price-sale">
+        <span class="saleprice">Новая цена: <input type="text" [(ngModel)]="good.saleprice"> <i class="fa fa-rub"></i></span>
+      </div>
+
+      <div *ngIf="good.salecheck && good.wscheck" class="price-sale">
+        <span class="saleprice">Новая оптовая цена: <input [(ngModel)]="good.salewsprice" type="text"> <i class="fa fa-rub"></i></span>
+      </div>
+    </div>
+    <div class="avail">
+      Товаров в наличии: <input [(ngModel)]="good.avail" step="1" min="0" size="3" type="number">
+    </div>
+    <div class="chars">
+      <div class="h-chars">Характеристики:</div>
+      <table class="chars-table">
+        <tr *ngFor="let item of good.chars">
+          <td class="char-name">{{item.name}}: </td>
+          <td>
+            <span *ngIf="item.type == 'single'">
+              <select [(ngModel)]="item.checkedValue">
+                <option [value]="value.id" *ngFor="let value of item.values">{{value.value}}</option>
+              </select>
+            </span>
+            <span *ngIf="item.type == 'few'">
+              <label class="val" *ngFor="let value of item.values"><input [(ngModel)]="value.checked" type="checkbox"> {{value.value}} </label>
+            </span>
+          </td>
+        </tr>
+        <tr *ngFor="let item of good.addedFields">
+          <td>
+            <input placeholder="Название" [(ngModel)]="item.name" type="text">
+          </td>
+          <td>
+            <input placeholder="Значение" [(ngModel)]="item.value" type="text">
+          </td>
+        </tr>
+      </table>
+      <span class="add-field" (click)="addField()">Добавить характеристику</span>
+    </div>
+    <div class="descr">
+      <div class="h-descr">Описание товара:</div>
+      <textarea [(ngModel)]="good.descr"></textarea>
+    </div>
+    <div class="h-related">Связанные товары:</div>
+    <div class="related-wrap clearfix">
+      <div class="list">
+        <ul>
+          <li><input [(ngModel)]="search" (input)="getGoods(true)" type="text" placeholder="Поиск по товарам..."></li>
+          <li [class.checked]="item.checked" *ngFor="let item of relatedList" (click)="item.checked=!item.checked">{{item.name}}</li>
+          <li *ngIf="goodsElse" (click)="getGoods()" class="load"><i class="fa fa-angle-down"></i></li>
+        </ul>
+      </div>
+      <div class="buttons">
+        <span (click)="selectRelated()"><i class="fa fa-angle-right"></i></span>
+        <span (click)="unselectRelated()"><i class="fa fa-angle-left"></i></span>
+      </div>
+      <div class="selected">
+        <ul>
+          <li (click)="item.checked=!item.checked" [class.checked]="item.checked" *ngFor="let item of selectedRelated">{{item.name}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="h-images">Изображения:</div>
+    <div class="images clearfix">
+      <div *ngFor="let item of good.inputImages" class="img">
+        <a [href]="pathToAssets + '/assets/img/goods/pre/' + item.img" [class.fancybox]="imageClickable" data-fancybox="group1">
+          <img (click)="imageClick($event)" [style.left]="item.leftPx + 'px'" (mousedown)="imgMouseDown($event,item)" [src]="pathToAssets + '/assets/img/goods/pre/' + item.img">
+        </a>
+        <div class="bottom-panel">
+          <span (click)="checkImg(item)" class="green" [class.selected]="item.checked"><i class="fa fa-check"></i></span>
+          <span (click)="removeImg(item.img)" class="red"><i class="fa fa-times"></i></span>
+          <span *ngIf="good.inputImages[item.num-1]" (click)="moveImg(item.num,item.num-1)"><i class="fa fa-arrow-left"></i></span>
+          <span *ngIf="good.inputImages[item.num+1]" (click)="moveImg(item.num,item.num+1)"><i class="fa fa-arrow-right"></i></span>
+        </div>
+      </div>
+      <div [class.full]="!good.inputImages[0]" class="img">
+        <div class="file-upload">
+          <label>
+            <input required name="image" multiple type="file" accept="image/jpeg,image/png" (change)="onFileSelected($event)" ngModel>
+            <span class="text">
+              <i class="fa fa-upload"></i><br>
+              Выберите изображения
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <button (click)="submitGood()" class="submit">
+      <span *ngIf="!good.id">Добавить товар</span>
+      <span *ngIf="good.id">Сохранить изменения</span>
+    </button>
+  </div>
+</div>

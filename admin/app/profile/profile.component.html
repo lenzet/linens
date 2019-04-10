@@ -1,0 +1,14 @@
+<div class="profile-content">
+  <h2 class="h2">Профиль</h2>
+  <div class="profile">
+    <span (click)="changeShow=true">Сменить пароль</span><br>
+    <span (click)="logout()">Выйти</span><br>
+    <span *ngIf="changedShow">Пароль успешно изменен!</span>
+    <form *ngIf="changeShow" #f="ngForm" (ngSubmit)="onSubmit(f)" ngNativeValidate>
+      <input name="oldPass" type="password" placeholder="Старый пароль" required ngModel><br>
+      <input name="newPass" type="password" placeholder="Новый пароль" required ngModel><br>
+      <input name="confirmPass" type="password" placeholder="Повторите пароль" required ngModel><br>
+      <button>Сменить пароль</button>
+    </form>
+  </div>
+</div>

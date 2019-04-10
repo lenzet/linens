@@ -1,0 +1,10 @@
+<div id="auth-bg">
+  <div class="form">
+    <div class="text">Вход в панель управления</div>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" ngNativeValidate>
+      <input name="login" placeholder="Логин" type="text" required ngModel><br>
+      <input name="password" placeholder="Пароль" type="password" required ngModel><br>
+      <button>Войти</button>
+    </form>
+  </div>
+</div>

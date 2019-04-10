@@ -1,0 +1,86 @@
+<div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
+  <div *ngIf="preloader" id="fountainG">
+    <div id="fountainG_1" class="fountainG"></div>
+    <div id="fountainG_2" class="fountainG"></div>
+    <div id="fountainG_3" class="fountainG"></div>
+    <div id="fountainG_4" class="fountainG"></div>
+    <div id="fountainG_5" class="fountainG"></div>
+    <div id="fountainG_6" class="fountainG"></div>
+    <div id="fountainG_7" class="fountainG"></div>
+    <div id="fountainG_8" class="fountainG"></div>
+  </div>
+  <div *ngIf="!cart[0] && !preloader" class="no-goods">Корзина пуста</div>
+  <div *ngIf="cart[0]" class="cart-table animated fadeInUp">
+    <table>
+      <thead>
+        <tr>
+          <th class="remove"></th>
+          <th class="img hidden-xs"></th>
+          <th class="name">Товар</th>
+          <th class="price hidden-xs">Цена</th>
+          <th class="quantity">Количество</th>
+          <th class="total">Итого</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cart">
+          <td class="remove"><i (click)="removeGoodFromCart(item.id)" class="fa fa-times"></i></td>
+          <td class="img hidden-xs"><a [routerLink]="'/catalog/' + item.id"><img [src]="'assets/img/goods/' + item.imgId + item.img" alt="Товар"></a></td>
+          <td class="name"><a [routerLink]="'/catalog/' + item.id">{{item.name}}</a></td>
+          <td *ngIf="item.wscount && item.count<item.wscount || !item.wscount" class="price hidden-xs red"><i class="fa fa-ruble"></i> {{item.price}}</td>
+          <td *ngIf="item.wscount && item.count>=item.wscount" class="price red"><i class="fa fa-ruble"></i> {{item.wsprice}}</td>
+          <td class="quantity"><input type="number" step="1" min="1" [max]="item.avail" value="1" (input)="cartCountChange(item.id,item.count)" [(ngModel)]="item.count"></td>
+          <td *ngIf="item.wscount && item.count<item.wscount || !item.wscount" class="red total"><i class="fa fa-ruble"></i> {{item.price * item.count}}</td>
+          <td *ngIf="item.wscount && item.count>=item.wscount" class="red total"><i class="fa fa-ruble"></i> {{item.wsprice * item.count}}</td>
+        </tr>
+        <tr>
+          <td style="border: none" colspan="4" class="hidden-xs"></td>
+          <td style="border: none" colspan="2" class="hidden-md hidden-sm hidden-lg"></td>
+          <td>Всего:</td>
+          <td class="cart-total red"><i class="fa fa-ruble"></i> {{totalPrice}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="cart[0]" class="form animated fadeInUp">
+    <h3 class="h3">Оформить заказ</h3>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" ngNativeValidate>
+      <table>
+        <tbody>
+          <tr>
+            <td class="td-left">Ваше имя:</td>
+            <td><input name="name" required type="text" placeholder="Введите имя" ngModel></td>
+          </tr>
+          <tr>
+            <td class="td-left">Email:</td>
+            <td><input name="email" required type="text" placeholder="Введите email" ngModel></td>
+          </tr>
+          <tr>
+            <td class="td-left">Телефон:</td>
+            <td><input name="phone" required type="text" placeholder="Введите номер" ngModel></td>
+          </tr>
+          <tr>
+            <td class="td-left">Тип доставки:</td>
+            <td>
+              <select name="type" required ngModel>
+                <option disabled selected>Выберите тип</option>
+                <option value="По Москве и области">По Москве и области</option>
+                <option value="По России">По России</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button>Отправить</button>
+    </form>
+  </div>
+</div>
+<div *ngIf="popup" (click)="popup=false" id="popup">
+  <div class="cart">
+    <div class="content">
+      <h3 class="h3">Спасибо за Ваш заказ!</h3>
+      <div class="text">Мы свяжемся с Вами в течение рабочего дня.</div>
+      <i (click)="popup=false" class="fa fa-times"></i>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="char-content">
+  <h2 class="h2">Характеристики</h2>
+  <form #f="ngForm" (ngSubmit)="addChar(f)" ngNativeValidate>
+    <table class="char-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Название</th>
+          <th>Тип</th>
+          <th>Фильтр</th>
+          <th>Значения</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of chars">
+          <td class="num center">
+            <i *ngIf="chars[item.num-2]" (click)="moveChar(item.num,'up')" class="fa fa-caret-up"></i>
+            <i *ngIf="!chars[item.num-2]" class="fa fa-caret-up dis"></i><br>
+            {{item.num}}<br>
+            <i *ngIf="chars[item.num]" (click)="moveChar(item.num,'down')" class="fa fa-caret-down"></i>
+            <i *ngIf="!chars[item.num]" class="fa fa-caret-down dis"></i>
+          </td>
+          <td class="edit name">
+            <span *ngIf="!item.editName">
+              {{item.name}} 
+              <i (click)="item.editName=!item.editName" class="fa fa-pencil"></i>
+              <i (click)="removeChar(item.id)" class="fa fa-trash"></i>
+            </span>
+            <span *ngIf="item.editName">
+              <form #f="ngForm" (ngSubmit)="editName(f);item.editName=!item.editName" ngNativeValidate>
+                <input type="hidden" name="id" [(ngModel)]="item.id">
+                <input type="text" name="name" [(ngModel)]="item.name">
+                <button><i class="fa fa-check"></i></button>
+              </form>
+            </span>
+          </td>
+          <td>
+            <form>
+              <select (change)="changeType(item.id,item.type)" name="type" [(ngModel)]="item.type">
+                <option [selected]="item.type == 'single'" value="single">Одно значение</option>
+                <option [selected]="item.type == 'few'" value="few">Несколько значений</option>
+              </select>
+            </form>
+          </td>
+          <td class="center">
+            <form><input (change)="changeFilter(item.id,item.filter?1:0)" name="filter" [(ngModel)]="item.filter" type="checkbox"></form>
+          </td>
+          <td class="edit">
+            <span *ngFor="let value of item.values">
+              <span *ngIf="!value.edit">
+                {{value.value}} 
+                <span class="edit-value">
+                  <i (click)="value.edit=!value.edit" class="fa fa-pencil"></i> 
+                  <i (click)="removeValue(value.id)" class="fa fa-trash"></i>
+                </span><br>
+              </span>
+              <span *ngIf="value.edit" class="edit">
+                <form #f="ngForm" (ngSubmit)="editValue(f);value.edit=!value.edit" ngNativeValidate>
+                  <input type="hidden" name="id" [(ngModel)]="value.id">
+                  <input type="text" name="value" [(ngModel)]="value.value"> 
+                  <button><i class="fa fa-check"></i></button>
+                </form>
+              </span>
+            </span>
+            <form #f="ngForm" (ngSubmit)="addValue(f)" ngNativeValidate>
+              <input name="id" type="hidden" [(ngModel)]="item.id">
+              <input name="value" type="text" placeholder="Добавить значение" required ngModel>
+              <button><i class="fa fa-plus"></i></button>
+            </form>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input required ngModel type="text" name="name" placeholder="Название"></td>
+          <td>
+            <select required name="type" ngModel>
+              <option value="" disabled selected>Количество значений</option>
+              <option value="single">Одно значение</option>
+              <option value="few">Несколько значений</option>
+            </select>
+          </td>
+          <td class="center"><input name="filter" ngModel type="checkbox"></td>
+          <td class="edit">
+            <span *ngFor="let item of charValueArr">{{item}} </span>
+            <span *ngIf="charValueArr[0]"><br></span>
+            <form (ngSubmit)="addCharValue(val);val=''" ngNativeValidate>
+              <input [(ngModel)]="val" placeholder="Добавить значение" name="val" type="text" required>
+              <button><i class="fa fa-plus"></i></button>
+            </form>
+          </td>
+          <td class="edit submit"><button><i class="fa fa-plus-square"></i></button></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
